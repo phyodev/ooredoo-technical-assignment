@@ -19,12 +19,13 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from users.views import CustomUserViewSet
 from products.views import ProductViewSet
-from points.views import PointLedgerViewSet
+from points.views import PointLedgerViewSet, RedemptionViewSet
 
 router = DefaultRouter()
 router.register(r'customers', CustomUserViewSet)
 router.register(r'products', ProductViewSet)
 router.register(r'points', PointLedgerViewSet)
+router.register(r'redemptions', RedemptionViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
