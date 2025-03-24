@@ -15,3 +15,18 @@ class PointLedger(models.Model):
 
     def __str__(self):
         return f"{self.customer.username} - {self.points} points"
+
+class Redemption(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('success', 'Success'),
+        ('failed', 'Failed'),
+    ]
+    
+    customer = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
+    product = models.ForeignKey("products.Product", on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.customer.user.username} - {self.product.name} ({self.status})"
