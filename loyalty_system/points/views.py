@@ -12,8 +12,8 @@ class PointLedgerViewSet(viewsets.ModelViewSet):
     serializer_class = PointLedgerSerializer
     # permission_classes = [IsAuthenticated]  # Requires authentication
 
-    # def get_queryset(self):
-    #     return PointLedger.objects.filter(customer=self.request.user)  # Show only current user's points
+    def get_queryset(self):
+        return PointLedger.objects.filter(customer=self.request.user)  # Show only current user's points
 
 class RedemptionViewSet(viewsets.ModelViewSet):
     """
