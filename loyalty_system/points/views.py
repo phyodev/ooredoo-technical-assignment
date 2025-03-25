@@ -26,8 +26,7 @@ class RedemptionViewSet(viewsets.ModelViewSet):
         Save redemption and trigger Celery task.
         """
         redemption = serializer.save(customer=self.request.user)
-        process_redemption.delay(redemption.id)  # 🚀 Run Celery in background
-
+        process_redemption.delay(redemption.id, self.request.user.id)  # Run Celery in background
 
     ## Just using as Third Party Redeem API
     @action(detail=True, methods=['post'], permission_classes=[AllowAny])
