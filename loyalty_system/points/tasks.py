@@ -49,6 +49,8 @@ def process_redemption(redemption_id, customer_id):
 
                 redemption.status = "success"
                 redemption.save()
+
+                customer.upgrade_tier()
                 return f"Redemption {redemption_id} successfully redeemed!"
         else:
             redemption.status = "failed"
