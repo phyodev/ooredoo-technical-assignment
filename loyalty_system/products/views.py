@@ -46,6 +46,7 @@ class ProductViewSet(viewsets.ModelViewSet):
                 )
 
                 total_points = PointLedger.get_available_points(request.user)
+                request.user.upgrade_tier()
 
                 # Respond with a success message and the points added
                 return Response({
