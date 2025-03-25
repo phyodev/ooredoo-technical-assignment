@@ -6,6 +6,20 @@ from points.models import PointLedger
 import requests
 
 @shared_task
+def remove_expired_points():
+    """
+    Celery task to remove expired points daily.
+    """
+    now = timezone.now()
+    expired_points = PointLedger.objects.filter(expires_at__lte=now)
+    count = expired_points.count()
+    
+    # Delete expired points
+    expired_points.delete()
+
+    return f"Removed expired points from {count} PointLedger"
+
+@shared_task
 def process_redemption(redemption_id, customer_id):
     """
     Celery task to process redemption by calling the local redeem API.

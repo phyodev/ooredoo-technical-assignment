@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'products',
     'points',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
