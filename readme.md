@@ -36,8 +36,17 @@ docker run -d -p 6379:6379 redis # ignore - if you already installed redis on yo
 cd loyalty_system
 celery -A loyalty_system worker --loglevel=info
 ```
+_**Note:** to process redemptions asynchronously via Celery_
 
 ## STEP - 5
+Open new terminal and run:
+```shell
+cd loyalty_system
+celery -A loyalty_system beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+```
+_**Note:** for Daily Task to remove expired points_
+
+## STEP - 6
 Now we can test the APIs via `http://localhost:8000`
 
 
