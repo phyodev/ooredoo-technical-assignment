@@ -46,6 +46,6 @@ All of the endpoints in this project
 ## Users
 `/api/users/` - CRUD for customers
 ## Products
-`/api/users/` - Read Only for customers
+`/api/users/` - Read Only and Update Only his/her Data for customers
 ## Points
 `/api/points/` - Read only for customers
