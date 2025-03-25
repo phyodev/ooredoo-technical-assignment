@@ -44,11 +44,11 @@ Now we can test the APIs via `http://localhost:8000`
 # Endpoints
 All of the endpoints in this project
 ## Users
-`/api/users/` - Read Only and Update Only his/her Data for customers
+`/api/users/` - Read Only and Update Only his/her Data for customers<br>
 ## Products
-`/api/products/` - Read Only for customers
-`/api/products/{product_id}/purchase/` - Purchase a product (for now payment keep as True)
+`/api/products/` - Read Only for customers<br>
+`/api/products/{product_id}/purchase/` - Purchase a product (for now payment keep as True)<br>
 ## Points
-`/api/points/` - Read only for customers
-`/api/points/redemptions/` - to redeem product with points
-`/api/points/redemptions/{redemption_id}/redeem/` - just as third party API
+`/api/points/` - Read only for customers<br>
+`/api/points/redemptions/` - to redeem product with points<br>
+`/api/points/redemptions/{redemption_id}/redeem/` - just as third party API<br>
