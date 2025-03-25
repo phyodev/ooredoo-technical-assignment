@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from users.models import CustomUser
 from datetime import timedelta, date
 
@@ -12,6 +13,17 @@ class PointLedger(models.Model):
         if not self.expires_at:
             self.expires_at = date.today() + timedelta(days=365)  # Points expire in 1 year
         super().save(*args, **kwargs)
+    
+    @staticmethod
+    def get_available_points(customer):
+        """
+        Calculate the total non-expired points a customer has.
+        """
+        now = timezone.now()
+        total_points = PointLedger.objects.filter(
+            customer=customer, expires_at__gt=now
+        ).aggregate(total=models.Sum('points'))['total']
+        return total_points or 0
 
     def __str__(self):
         return f"{self.customer.username} - {self.points} points"
@@ -29,4 +41,4 @@ class Redemption(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.customer.user.username} - {self.product.name} ({self.status})"
+        return f"{self.customer.username} - {self.product.name} ({self.status})"

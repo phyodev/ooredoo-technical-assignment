@@ -9,10 +9,10 @@
 
 ## Installation and Running Guides
 
-## Step - 1
+## STEP - 1
 Clone the project first
 
-## Step - 2
+## STEP - 2
 ```shell
 cd ooredoo-technical-assignment
 python -m venv venv
@@ -21,11 +21,31 @@ which python # to ensure the environment is activated
 pip install -r requirements.txt
 ```
 
-## Step - 3
+## STEP - 3
 ```shell
+cd loyalty_system
 python migrate
+python manage.py collectstatic
 python manage.py runserver
 ```
 
-## Step - 4
-now we can test the APIs via `http://localhost:8000`
+## STEP - 4
+Open new terminal and run:
+```shell
+docker run -d -p 6379:6379 redis # ignore - if you already installed redis on your host.
+cd loyalty_system
+celery -A loyalty_system worker --loglevel=info
+```
+
+## STEP - 5
+Now we can test the APIs via `http://localhost:8000`
+
+
+# Endpoints
+All of the endpoints in this project
+## Users
+`/api/users/` - CRUD for customers
+## Products
+`/api/users/` - Read Only for customers
+## Points
+`/api/points/` - Read only for customers
