@@ -1,11 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-from users.models import CustomUser
 from datetime import timedelta, date
 
 class PointLedger(models.Model):
-    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    customer = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
     points = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateField()

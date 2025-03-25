@@ -33,6 +33,11 @@ class ProductViewSet(viewsets.ModelViewSet):
             if purchase_success:
                 points_earned = product.points_earned
 
+                if request.user.tier == 'GOLD':
+                    points_earned += settings.GOLD_TIER['EXTRA_POINTS']
+                elif request.user.tier == 'Platinum':
+                    points_earned += settings.PLATINUM_TIER['EXTRA_POINTS']
+
                 # Add points to the user's PointLedger
                 ledger_entry = PointLedger.objects.create(
                     customer=request.user,
@@ -41,6 +46,7 @@ class ProductViewSet(viewsets.ModelViewSet):
                 )
 
                 total_points = PointLedger.get_available_points(request.user)
+                request.user.upgrade_tier()
 
                 # Respond with a success message and the points added
                 return Response({

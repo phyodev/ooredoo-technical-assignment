@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'products',
     'points',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -132,6 +133,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = 'static/'
 AUTH_USER_MODEL = 'users.CustomUser'
 POINTS_EXPIRY = 365
+GOLD_TIER = {'EXTRA_POINTS': 100, 'MINIMUM_POINTS': 10000}
+PLATINUM_TIER = {'EXTRA_POINTS': 300, 'MINIMUM_POINTS': 30000}
 
 # Redis as Celery Broker
 CELERY_BROKER_URL = "redis://localhost:6379/0"
