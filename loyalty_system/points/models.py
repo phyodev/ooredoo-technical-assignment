@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 from users.models import CustomUser
 from datetime import timedelta, date
 
@@ -11,7 +12,7 @@ class PointLedger(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.expires_at:
-            self.expires_at = date.today() + timedelta(days=365)  # Points expire in 1 year
+            self.expires_at = date.today() + timedelta(days=settings.POINTS_EXPIRY)  # Points expire in 1 year
         super().save(*args, **kwargs)
     
     @staticmethod
