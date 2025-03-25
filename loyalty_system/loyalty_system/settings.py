@@ -129,6 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 ### ----------  Custom Added settings -------------
+STATIC_ROOT = 'static/'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Redis as Celery Broker

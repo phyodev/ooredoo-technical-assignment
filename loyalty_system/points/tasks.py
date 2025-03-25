@@ -1,37 +1,32 @@
 from celery import shared_task
-from django.utils import timezone
 from .models import Redemption
 import requests
 
 @shared_task
 def process_redemption(redemption_id):
     """
-    Celery task to process a redemption asynchronously and call third-party API.
+    Celery task to process redemption by calling the local redeem API.
     """
     try:
         redemption = Redemption.objects.get(id=redemption_id)
 
-        if redemption.status != 'pending':
-            return f"Redemption {redemption_id} is already processed."
+        if redemption.status != "pending":
+            return f"Redemption {redemption_id} already processed. It was {redemption.status}"
 
-        # Simulate calling a third-party API
-        api_url = "https://thirdparty.com/api/redeem"
-        payload = {
-            "customer_id": redemption.customer.id,
-            "product_id": redemption.product.id,
-        }
-        response = requests.post(api_url, json=payload)
 
-        # Handle API response
+        url = f"http://127.0.0.1:8000/api/redemptions/{redemption_id}/redeem/"
+        response = requests.post(url, verify=False) # Disable SSL verification for just local development
+
         if response.status_code == 200:
-            redemption.status = 'success'
+            redemption.status = "success"
+            redemption.save()
+            return f"Redemption {redemption_id} successfully redeemed!"
         else:
-            redemption.status = 'failed'
-
-        redemption.processed_at = timezone.now()
-        redemption.save()
-
-        return f"Redemption {redemption_id} processed with status: {redemption.status}"
+            redemption.status = "failed"
+            redemption.save()
+            return f"Redemption {redemption_id} processed, but redeem action failed."
 
     except Redemption.DoesNotExist:
         return f"Redemption {redemption_id} not found."
+    except Exception as e:
+        return f"Error processing redemption {redemption_id}: {str(e)}"
