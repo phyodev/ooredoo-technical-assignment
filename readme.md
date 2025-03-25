@@ -50,5 +50,6 @@ All of the endpoints in this project
 `/api/products/{product_id}/purchase/` - Purchase a product (for now payment keep as True)<br>
 ## Points
 `/api/points/` - Read only for customers<br>
-`/api/points/redemptions/` - to redeem product with points<br>
-`/api/points/redemptions/{redemption_id}/redeem/` - just as third party API<br>
+`POST /api/points/redemptions/` - to redeem product with points<br>
+`POST /api/points/redemptions/{redemption_id}/redeem/` - just as third party API<br>
+`GET /api/points/redemptions/{redemption_id}/`
